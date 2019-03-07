@@ -7,11 +7,7 @@ endColor="\033[97m"
 check="✔"
 cross="✘"
 
-if [ ! -z "$PYTHON_VERSION" ];
-then
-  PYTHON_VERSION='3.6.8'
-fi
-
+PYTHON_VERSION=${PYTHONVERSION:-'3.6.8'}
 PYTHON='python3.6'
 PYTHON_SRC='python-src'
 PYTHON_ZIP="Python-$PYTHON_VERSION.tgz"
@@ -20,8 +16,8 @@ PYTHON_PATH="/usr/local/bin/$PYTHON"
 set -e
 
 if [[ $EUID -ne 0 ]]; then
-   echo "This script must be run as root" 
-   exit 1
+  echo "This script must be run as root" 
+  exit 1
 fi
 
 # LINUX DEPENDENCIES
