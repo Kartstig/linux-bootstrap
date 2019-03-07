@@ -7,7 +7,7 @@ endColor="\033[97m"
 check="✔"
 cross="✘"
 
-PYTHON_VERSION=${PYTHONVERSION:-'3.6.8'}
+PYTHON_VERSION=${PYTHON_VERSION:-'3.6.8'}
 PYTHON='python3.6'
 PYTHON_SRC='python-src'
 PYTHON_ZIP="Python-$PYTHON_VERSION.tgz"
