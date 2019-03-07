@@ -55,45 +55,26 @@ pip install virtualenv
 # COMPILE PYTHON
 export LDFLAGS="-L/usr/local/opt/openssl/lib"
 export CPPFLAGS="-I/usr/local/opt/openssl/include"
-echo -en "\t${yellow}Installing Python Version:\t${green}$PYTHON_VERSION${endColor}\n"
-if [ -d "$PYTHON_SRC" ]; then
-	echo -en "\t${yellow}Removing old Python source files:\t${endColor}"
-	OUT=$(rm -rf $PYTHON_SRC)
-	echo -en "\r\t${yellow}Removing old Python source files:\t${green}${check}${endColor}\n"
-fi
-echo -en "\t${yellow}Downloading $PYTHON_ZIP:${endColor}\r"
-OUT=$(curl -L -O "https://www.python.org/ftp/python/$PYTHON_VERSION/$PYTHON_ZIP" 2>&1 > /dev/null)
-if [ $? -gt 0 ]; then
-	echo -en "\r\t${yellow}Downloading $PYTHON_ZIP:\t${red}${cross}${endColor}\n"
-	echo -e "${red}$OUT${endColor}"
-	exit 1
-else
-	echo -en "\r\t${yellow}Downloading $PYTHON_ZIP:\t${green}${check}${endColor}\n"
+
+echo -e "${yellow}=> Installing Python Version\t${green}$PYTHON_VERSION${endColor}"
+
+if [ -d "$PYTHON_SRC" ];
+then
+	echo -e "${yellow}=> Removing old Python source files${endColor}"
+	rm -rf $PYTHON_SRC
 fi
 
-echo -en "\t${yellow}Unpacking $PYTHON_ZIP:${endColor}"
-OUT=$(mkdir $PYTHON_SRC && \
-	tar -xvzf "$PYTHON_ZIP" -C $PYTHON_SRC --strip-components 1 2>&1 > /dev/null)
-if [ $? -gt 0 ]; then
-	exit 0
-	echo -en "\r\t${yellow}Unpacking $PYTHON_ZIP:\t${red}${cross}${endColor}\n"
-	echo -e "${red}$OUT${endColor}"
-	exit 1
-else
-	echo -en "\r\t${yellow}Unpacking $PYTHON_ZIP:\t${green}${check}${endColor}\n"
-fi
+echo -e "${yellow}=> Downloading $PYTHON_ZIP${endColor}"
+curl -L -O "https://www.python.org/ftp/python/$PYTHON_VERSION/$PYTHON_ZIP"
 
-echo -en "\t${yellow}Compiling Python$PYTHON_VERSION:${endColor}\r"
-OUT=$(cd $PYTHON_SRC 2>&1 > /dev/null && \
-	./configure --enable-optimizations 2>&1 > /dev/null && \
-  make -j4 && \
-	sudo make install 2>&1 > /dev/null && \
-	cd $ROOT_DIR 2>&1 > /dev/null)
-if [ $? -gt 0 ]; then
-	echo -en "\r\t${yellow}Compiling Python$PYTHON_VERSION:\t${red}${cross}${endColor}\n"
-	echo -e "${red}$OUT${endColor}"
-	exit 1
-else
-	echo -en "\r\t${yellow}Compiling Python$PYTHON_VERSION:\t${green}${check}${endColor}\n"
-fi
+echo -e "${yellow}=> Unpacking $PYTHON_ZIP${endColor}"
+mkdir $PYTHON_SRC
+tar -xvzf "$PYTHON_ZIP" -C $PYTHON_SRC --strip-components
+
+echo -e "${yellow}=> Compiling Python$PYTHON_VERSION:${endColor}\r"
+cd $PYTHON_SRC
+./configure --enable-optimizations
+make -j4
+sudo make install
+cd ../
 
