@@ -65,7 +65,7 @@ curl -L -O "https://www.python.org/ftp/python/$PYTHON_VERSION/$PYTHON_ZIP"
 
 echo -e "${yellow}=> Unpacking $PYTHON_ZIP${endColor}"
 mkdir $PYTHON_SRC
-tar -xvzf "$PYTHON_ZIP" -C $PYTHON_SRC --strip-components
+tar -xvzf "$PYTHON_ZIP" -C $PYTHON_SRC --strip-components=2
 
 echo -e "${yellow}=> Compiling Python$PYTHON_VERSION:${endColor}\r"
 cd $PYTHON_SRC
