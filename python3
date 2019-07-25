@@ -26,7 +26,6 @@ apt-get update
 apt-get install -y \
   build-essential \
   git \
-  gnome-schedule \
   libc6-dev \
   libffi-dev \
   libncursesw5-dev \
