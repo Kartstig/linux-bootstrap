@@ -16,7 +16,7 @@ PYTHON_PATH="/usr/local/bin/$PYTHON"
 set -e
 
 if [[ $EUID -ne 0 ]]; then
-  echo "This script must be run as root" 
+  echo "This script must be run as root"
   exit 1
 fi
 
@@ -69,7 +69,7 @@ tar -xvzf "$PYTHON_ZIP" -C $PYTHON_SRC --strip-components=1
 
 echo -e "${yellow}=> Compiling Python$PYTHON_VERSION:${endColor}\r"
 cd $PYTHON_SRC
-./configure --enable-optimizations
+./configure
 make -j4
 sudo make install
 cd ../
@@ -81,5 +81,3 @@ tar -xf node-v10.15.3-linux-armv7l.tar.xz
 sudo ln -s ~/node-v10.15.3-linux-armv7l/bin/node /usr/local/bin/node
 sudo ln -s ~/node-v10.15.3-linux-armv7l/bin/npm /usr/local/bin/npm
 sudo ln -s ~/node-v10.15.3-linux-armv7l/bin/npx /usr/local/bin/npx
-
-
