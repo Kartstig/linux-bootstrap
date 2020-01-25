@@ -1,22 +1,41 @@
 #!/bin/bash
 
-source ./colors
+export red="\033[31m"
+export yellow="\033[33m"
+export green="\033[32m"
+export endColor="\033[97m"
+export check="✔"
+export cross="✘"
 
 set -e
 
-OUTFILE=bootstrap_server
+OUTFILE_SERVER=bootstrap_server
+OUTFILE_RPI=rpi
 
 # Remove old file if it exists
-if [ -f $OUTFILE ];
+if [ -f $OUTFILE_SERVER ];
 then
-  rm $OUTFILE
+  rm $OUTFILE_SERVER
 fi
 
-echo -e "${yellow}=> Compiling $OUTFILE${endColor}"
-cat ./zfs >> $OUTFILE
-echo -e "\n" >> $OUTFILE
-cat ./python3 >> $OUTFILE
-echo -e "\n" >> $OUTFILE
-cat ./node >> $OUTFILE
-echo -e "\n" >> $OUTFILE
-echo -e "${green}=> Compiled $OUTFILE${endColor}"
+# Remove old file if it exists
+if [ -f $OUTFILE_RPI ];
+then
+  rm $OUTFILE_RPI
+fi
+
+echo -e "${yellow}=> Compiling $OUTFILE_SERVER${endColor}"
+cat ./zfs >> $OUTFILE_SERVER
+echo -e "\n" >> $OUTFILE_SERVER
+cat ./python3 >> $OUTFILE_SERVER
+echo -e "\n" >> $OUTFILE_SERVER
+cat ./node >> $OUTFILE_SERVER
+echo -e "\n" >> $OUTFILE_SERVER
+echo -e "${green}=> Compiled $OUTFILE_SERVER${endColor}"
+
+echo -e "${yellow}=> Compiling $OUTFILE_RPI${endColor}"
+cat ./python3 >> $OUTFILE_RPI
+echo -e "\n" >> $OUTFILE_RPI
+cat ./node >> $OUTFILE_RPI
+echo -e "\n" >> $OUTFILE_RPI
+echo -e "${green}=> Compiled $OUTFILE_RPI${endColor}"
