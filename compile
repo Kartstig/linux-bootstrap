@@ -31,6 +31,8 @@ cat ./python3 >> $OUTFILE_SERVER
 echo -e "\n" >> $OUTFILE_SERVER
 cat ./node >> $OUTFILE_SERVER
 echo -e "\n" >> $OUTFILE_SERVER
+cat ./steam >> $OUTFILE_SERVER
+echo -e "\n" >> $OUTFILE_SERVER
 echo -e "${green}=> Compiled $OUTFILE_SERVER${endColor}"
 
 echo -e "${yellow}=> Compiling $OUTFILE_RPI${endColor}"

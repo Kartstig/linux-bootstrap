@@ -14,7 +14,7 @@ PYTHON_PATH="/usr/local/bin/$PYTHON"
 set -e
 
 if [[ $EUID -ne 0 ]]; then
-  echo -e "[Python Installer]\tThis script must be run as root"
+  echo -e "[Python Installer] This script must be run as root"
   exit 1
 fi
 
@@ -70,3 +70,5 @@ cd $PYTHON_SRC
 make -j4
 sudo make install
 cd ../
+
+echo -e "${green}[Python Installer] Done.${endColor}"

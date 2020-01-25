@@ -8,22 +8,26 @@ export cross="✘"
 set -e
 
 if [[ $EUID -ne 0 ]]; then
-  echo -e "[ZFS Installer] \tThis script must be run as root"
+  echo -e "[ZFS Installer] This script must be run as root"
   exit 1
 fi
 
 sudo apt install zfsutils-linux
+echo -e "${endColor}"
 
 while true;
 do
-  read -p "Would you like to import a zpool?" yn
+  read -p "Would you like to import a zpool? [y/n]: " yn
   case $yn in
       [Yy]* )
-        read -p "Enter zpool name:" $zpool
-        zpool import $zpool
+        read -p "Enter zpool name: " zpool
+        zpool import -f $zpool
+        echo ""
+        echo -e "${green}=> Imported $zpool${endColor}"
         ;;
       [Nn]* ) exit;;
       * ) echo "Please answer yes or no.";;
   esac
 done
 
+echo -e "${green}[ZFS Installer] Done.${endColor}"

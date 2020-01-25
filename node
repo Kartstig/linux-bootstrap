@@ -9,7 +9,7 @@ export cross="✘"
 set -e
 
 if [[ $EUID -ne 0 ]]; then
-  echo -e "[Node Installer]\tThis script must be run as root"
+  echo -e "[Node Installer] This script must be run as root"
   exit 1
 fi
 
@@ -34,4 +34,5 @@ tar -xf node-v$NODE_VERSION-linux-$NODE_ARCH.tar.xz
 sudo ln -s ~/node-v$NODE_VERSION-linux-$NODE_ARCH/bin/node /usr/local/bin/node
 sudo ln -s ~/node-v$NODE_VERSION-linux-$NODE_ARCH/bin/npm /usr/local/bin/npm
 sudo ln -s ~/node-v$NODE_VERSION-linux-$NODE_ARCH/bin/npx /usr/local/bin/npx
-echo -e "${green}=> Installed Node$NODE_VERSION-$NODE_ARCH${endColor}\r"
+
+echo -e "${green}[Node Installer] Done.${endColor}"

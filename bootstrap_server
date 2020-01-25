@@ -8,11 +8,29 @@ export cross="✘"
 set -e
 
 if [[ $EUID -ne 0 ]]; then
-  echo -e "[ZFS Installer] \tThis script must be run as root"
+  echo -e "[ZFS Installer] This script must be run as root"
   exit 1
 fi
 
 sudo apt install zfsutils-linux
+echo -e "${endColor}"
+
+while true;
+do
+  read -p "Would you like to import a zpool? [y/n]: " yn
+  case $yn in
+      [Yy]* )
+        read -p "Enter zpool name: " zpool
+        zpool import -f $zpool
+        echo ""
+        echo -e "${green}=> Imported $zpool${endColor}"
+        ;;
+      [Nn]* ) exit;;
+      * ) echo "Please answer yes or no.";;
+  esac
+done
+
+echo -e "${green}[ZFS Installer] Done.${endColor}"
 
 
 export red="\033[31m"
@@ -31,7 +49,7 @@ PYTHON_PATH="/usr/local/bin/$PYTHON"
 set -e
 
 if [[ $EUID -ne 0 ]]; then
-  echo -e "[Python Installer]\tThis script must be run as root"
+  echo -e "[Python Installer] This script must be run as root"
   exit 1
 fi
 
@@ -88,6 +106,8 @@ make -j4
 sudo make install
 cd ../
 
+echo -e "${green}[Python Installer] Done.${endColor}"
+
 
 export red="\033[31m"
 export yellow="\033[33m"
@@ -100,7 +120,7 @@ export cross="✘"
 set -e
 
 if [[ $EUID -ne 0 ]]; then
-  echo -e "[Node Installer]\tThis script must be run as root"
+  echo -e "[Node Installer] This script must be run as root"
   exit 1
 fi
 
@@ -125,6 +145,32 @@ tar -xf node-v$NODE_VERSION-linux-$NODE_ARCH.tar.xz
 sudo ln -s ~/node-v$NODE_VERSION-linux-$NODE_ARCH/bin/node /usr/local/bin/node
 sudo ln -s ~/node-v$NODE_VERSION-linux-$NODE_ARCH/bin/npm /usr/local/bin/npm
 sudo ln -s ~/node-v$NODE_VERSION-linux-$NODE_ARCH/bin/npx /usr/local/bin/npx
-echo -e "${green}=> Installed Node$NODE_VERSION-$NODE_ARCH${endColor}\r"
 
+echo -e "${green}[Node Installer] Done.${endColor}"
+
+
+export red="\033[31m"
+export yellow="\033[33m"
+export green="\033[32m"
+export endColor="\033[97m"
+export check="✔"
+export cross="✘"
+
+LINK_DIR=/kapital/games
+
+set -e
+
+if [[ $EUID -ne 0 ]]; then
+  echo -e "[Steam Installer] This script must be run as root"
+  exit 1
+fi
+
+echo -e "[Steam Installer] Creating steam symlink"
+sudo ln -sfv $HOME/.steam $LINK_DIR
+
+sudo add-apt-repository multiverse
+sudo apt update
+sudo apt install zfsutils-linux
+
+echo -e "${green}[Steam Installer] Done.${endColor}"
 

@@ -10,7 +10,7 @@ LINK_DIR=/kapital/games
 set -e
 
 if [[ $EUID -ne 0 ]]; then
-  echo -e "[Steam Installer] \tThis script must be run as root"
+  echo -e "[Steam Installer] This script must be run as root"
   exit 1
 fi
 
@@ -20,3 +20,5 @@ sudo ln -sfv $HOME/.steam $LINK_DIR
 sudo add-apt-repository multiverse
 sudo apt update
 sudo apt install zfsutils-linux
+
+echo -e "${green}[Steam Installer] Done.${endColor}"
