@@ -1,11 +1,4 @@
-#!/bin/bash
-
-red="\033[31m"
-yellow="\033[33m"
-green="\033[32m"
-endColor="\033[97m"
-check="✔"
-cross="✘"
+source ./colors
 
 PYTHON_VERSION=${PYTHON_VERSION:-'3.6.8'}
 PYTHON='python3.6'
@@ -16,14 +9,14 @@ PYTHON_PATH="/usr/local/bin/$PYTHON"
 set -e
 
 if [[ $EUID -ne 0 ]]; then
-  echo "This script must be run as root"
+  echo -e "[Python Installer]\tThis script must be run as root"
   exit 1
 fi
 
 # LINUX DEPENDENCIES
-apt-get update
+apt update
 
-apt-get install -y \
+apt install -y \
   build-essential \
   git \
   libc6-dev \
@@ -68,15 +61,7 @@ tar -xvzf "$PYTHON_ZIP" -C $PYTHON_SRC --strip-components=1
 
 echo -e "${yellow}=> Compiling Python$PYTHON_VERSION:${endColor}\r"
 cd $PYTHON_SRC
-./configure
+./configure --enable-optimizations
 make -j4
 sudo make install
 cd ../
-
-echo -e "${yellow}=> Installing Node$PYTHON_VERSION:${endColor}\r"
-cd ~/
-wget https://nodejs.org/dist/v10.15.3/node-v10.15.3-linux-armv7l.tar.xz
-tar -xf node-v10.15.3-linux-armv7l.tar.xz
-sudo ln -s ~/node-v10.15.3-linux-armv7l/bin/node /usr/local/bin/node
-sudo ln -s ~/node-v10.15.3-linux-armv7l/bin/npm /usr/local/bin/npm
-sudo ln -s ~/node-v10.15.3-linux-armv7l/bin/npx /usr/local/bin/npx
