@@ -13,3 +13,17 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 sudo apt install zfsutils-linux
+
+while true;
+do
+  read -p "Would you like to import a zpool?" yn
+  case $yn in
+      [Yy]* )
+        read -p "Enter zpool name:" $zpool
+        zpool import $zpool
+        ;;
+      [Nn]* ) exit;;
+      * ) echo "Please answer yes or no.";;
+  esac
+done
+
