@@ -170,7 +170,7 @@ sudo ln -sfv $HOME/.steam $LINK_DIR
 
 sudo add-apt-repository multiverse
 sudo apt update
-sudo apt install zfsutils-linux
+sudo apt install steam
 
 echo -e "${green}[Steam Installer] Done.${endColor}"
 
