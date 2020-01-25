@@ -20,7 +20,7 @@ case "$(dpkg --print-architecture)" in
     NODE_ARCH="armv7l"
     ;;
   *)
-    echo -e "${red}=> Script not able to install Node on this architecture: $(dpkg --print-architecture)"
+    echo -e "${red}=> Script not able to install Node on this architecture: $(dpkg --print-architecture)${endColor}"
     exit 1
 esac
 
@@ -30,3 +30,4 @@ tar -xf node-v$NODE_VERSION-linux-$NODE_ARCH.tar.xz
 sudo ln -s ~/node-v$NODE_VERSION-linux-$NODE_ARCH/bin/node /usr/local/bin/node
 sudo ln -s ~/node-v$NODE_VERSION-linux-$NODE_ARCH/bin/npm /usr/local/bin/npm
 sudo ln -s ~/node-v$NODE_VERSION-linux-$NODE_ARCH/bin/npx /usr/local/bin/npx
+echo -e "${green}=> Installed Node$NODE_VERSION-$NODE_ARCH${endColor}\r"

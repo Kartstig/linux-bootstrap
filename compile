@@ -1,0 +1,22 @@
+#!/bin/bash
+
+source ./colors
+
+set -e
+
+OUTFILE=bootstrap_server
+
+# Remove old file if it exists
+if [ -f $OUTFILE ];
+then
+  rm $OUTFILE
+fi
+
+echo -e "${yellow}=> Compiling $OUTFILE${endColor}"
+cat ./zfs >> $OUTFILE
+echo -e "\n" >> $OUTFILE
+cat ./python3 >> $OUTFILE
+echo -e "\n" >> $OUTFILE
+cat ./node >> $OUTFILE
+echo -e "\n" >> $OUTFILE
+echo -e "${green}=> Compiled $OUTFILE${endColor}"

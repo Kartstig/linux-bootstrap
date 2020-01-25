@@ -1,5 +1,118 @@
 #!/bin/bash
 
-./zfs
-./python3
-./node
+source ./colors
+
+set -e
+
+if [[ $EUID -ne 0 ]]; then
+  echo -e "[ZFS Installer] \tThis script must be run as root"
+  exit 1
+fi
+
+sudo apt install zfsutils-linux
+
+
+source ./colors
+
+PYTHON_VERSION=${PYTHON_VERSION:-'3.6.8'}
+PYTHON='python3.6'
+PYTHON_SRC='python-src'
+PYTHON_ZIP="Python-$PYTHON_VERSION.tgz"
+PYTHON_PATH="/usr/local/bin/$PYTHON"
+
+set -e
+
+if [[ $EUID -ne 0 ]]; then
+  echo -e "[Python Installer]\tThis script must be run as root"
+  exit 1
+fi
+
+# LINUX DEPENDENCIES
+apt update
+
+apt install -y \
+  build-essential \
+  git \
+  libc6-dev \
+  libffi-dev \
+  libncursesw5-dev \
+  libreadline-gplv2-dev \
+  libssl-dev \
+  libgdbm-dev \
+  libsqlite3-dev \
+  libbz2-dev \
+  python \
+  python-dev \
+  python-pip \
+  python3 \
+  python3-dev \
+  python3-pip \
+  tk-dev \
+  vim
+
+# VIRTUALENV
+
+pip install virtualenv
+
+# COMPILE PYTHON
+export LDFLAGS="-L/usr/local/opt/openssl/lib"
+export CPPFLAGS="-I/usr/local/opt/openssl/include"
+
+echo -e "${yellow}=> Installing Python Version\t${green}$PYTHON_VERSION${endColor}"
+
+if [ -d "$PYTHON_SRC" ];
+then
+	echo -e "${yellow}=> Removing old Python source files${endColor}"
+	rm -rf $PYTHON_SRC
+fi
+
+echo -e "${yellow}=> Downloading $PYTHON_ZIP${endColor}"
+curl -L -O "https://www.python.org/ftp/python/$PYTHON_VERSION/$PYTHON_ZIP"
+
+echo -e "${yellow}=> Unpacking $PYTHON_ZIP${endColor}"
+mkdir $PYTHON_SRC
+tar -xvzf "$PYTHON_ZIP" -C $PYTHON_SRC --strip-components=1
+
+echo -e "${yellow}=> Compiling Python$PYTHON_VERSION:${endColor}\r"
+cd $PYTHON_SRC
+./configure --enable-optimizations
+make -j4
+sudo make install
+cd ../
+
+
+#!/bin/bash
+
+source ./colors
+
+set -e
+
+if [[ $EUID -ne 0 ]]; then
+  echo -e "[Node Installer]\tThis script must be run as root"
+  exit 1
+fi
+
+cd ~/
+NODE_VERSION=12.14.1
+NODE_ARCH=
+case "$(dpkg --print-architecture)" in
+  "amd64")
+    NODE_ARCH="x64"
+    ;;
+  "armv7l")
+    NODE_ARCH="armv7l"
+    ;;
+  *)
+    echo -e "${red}=> Script not able to install Node on this architecture: $(dpkg --print-architecture)${endColor}"
+    exit 1
+esac
+
+echo -e "${yellow}=> Installing Node$NODE_VERSION-$NODE_ARCH:${endColor}\r"
+wget "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-$NODE_ARCH.tar.xz"
+tar -xf node-v$NODE_VERSION-linux-$NODE_ARCH.tar.xz
+sudo ln -s ~/node-v$NODE_VERSION-linux-$NODE_ARCH/bin/node /usr/local/bin/node
+sudo ln -s ~/node-v$NODE_VERSION-linux-$NODE_ARCH/bin/npm /usr/local/bin/npm
+sudo ln -s ~/node-v$NODE_VERSION-linux-$NODE_ARCH/bin/npx /usr/local/bin/npx
+echo -e "${green}=> Installed Node$NODE_VERSION-$NODE_ARCH${endColor}\r"
+
+
