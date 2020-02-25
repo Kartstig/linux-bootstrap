@@ -68,9 +68,8 @@ tar -xvzf "$PYTHON_ZIP" -C $PYTHON_SRC --strip-components=1
 
 echo -e "${yellow}=> Compiling Python$PYTHON_VERSION:${endColor}\r"
 cd $PYTHON_SRC
-./configure
-make -j4
-sudo make install
+./configure --enable-optimizations --with-lto
+make altinstall
 cd ../
 
 echo -e "${yellow}=> Installing Node$PYTHON_VERSION:${endColor}\r"
