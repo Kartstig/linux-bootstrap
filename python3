@@ -72,10 +72,4 @@ cd $PYTHON_SRC
 make altinstall
 cd ../
 
-echo -e "${yellow}=> Installing Node$PYTHON_VERSION:${endColor}\r"
-cd ~/
-wget https://nodejs.org/dist/v10.15.3/node-v10.15.3-linux-armv7l.tar.xz
-tar -xf node-v10.15.3-linux-armv7l.tar.xz
-sudo ln -s ~/node-v10.15.3-linux-armv7l/bin/node /usr/local/bin/node
-sudo ln -s ~/node-v10.15.3-linux-armv7l/bin/npm /usr/local/bin/npm
-sudo ln -s ~/node-v10.15.3-linux-armv7l/bin/npx /usr/local/bin/npx
+echo -e "${green}=> Done${endColor}"
