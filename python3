@@ -3,7 +3,7 @@
 red="\033[31m"
 yellow="\033[33m"
 green="\033[32m"
-endColor="\033[97m"
+endColor="\033[0m"
 check="✔"
 cross="✘"
 

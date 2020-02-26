@@ -3,7 +3,7 @@
 red="\033[31m"
 yellow="\033[33m"
 green="\033[32m"
-endColor="\033[97m"
+endColor="\033[0m"
 check="✔"
 cross="✘"
 
@@ -18,7 +18,7 @@ fi
 
 echo -e "${yellow}=> Installing Node: $NODE_VERSION${endColor}"
 cd ~/
-wget "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-armv7l.tar.xz"
+wget https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-armv7l.tar.xz
 tar -xf node-v$NODE_VERSION-linux-armv7l.tar.xz
 sudo ln -sfv ~/node-v$NODE_VERSION-linux-armv7l/bin/node /usr/local/bin/node
 sudo ln -sfv ~/node-v$NODE_VERSION-linux-armv7l/bin/npm /usr/local/bin/npm
